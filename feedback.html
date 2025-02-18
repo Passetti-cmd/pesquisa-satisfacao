@@ -78,7 +78,7 @@
     // Função para carregar feedbacks do backend e preencher a tabela
     async function carregarFeedbacks() {
       try {
-        const response = await fetch("http://127.0.0.1:5000/feedbacks");
+        const response = await fetch("https://pesquisa-satisfacao-efpd.onrender.com/feedbacks");
         const feedbacks = await response.json();
         const tabela = document.querySelector("#tabelaFeedbacks tbody");
 
