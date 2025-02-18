@@ -265,7 +265,7 @@
                 voltaria_pelo_preco: document.getElementById("voltaria_pelo_preco").value
             };
 
-            fetch("http://localhost:5000/salvar", {
+            fetch("https://pesquisa-satisfacao-efpd.onrender.com/salvar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(dados)
