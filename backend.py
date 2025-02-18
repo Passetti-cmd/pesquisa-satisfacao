@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
@@ -5,11 +6,11 @@ import sqlite3
 app = Flask(__name__)
 CORS(app)
 
-# Conectar ao banco de dados SQLite (cria o arquivo restaurante.db, se não existir)
+# Conecta (ou cria) o banco de dados SQLite restaurante.db
 con = sqlite3.connect("restaurante.db", check_same_thread=False)
 cursor = con.cursor()
 
-# Criar a tabela se não existir
+# Cria a tabela se não existir
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS clientes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,7 +34,7 @@ con.commit()
 def home():
     return jsonify({"mensagem": "API do Restaurante está funcionando com SQLite!"})
 
-# Rota para receber os dados do formulário
+# Rota para receber dados do formulário
 @app.route("/salvar", methods=["POST"])
 def salvar_dados():
     try:
@@ -72,4 +73,7 @@ def listar_feedbacks():
     return jsonify(dados)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Lê a porta a partir de variável de ambiente (Render/Heroku), senão usa 5000
+    port = int(os.environ.get("PORT", 5000))
+    # Faz o bind no host 0.0.0.0 para o Render detectar a porta aberta
+    app.run(host="0.0.0.0", port=port, debug=True)
