@@ -1,283 +1,327 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pesquisa de Satisfação</title>
-    <style>
-        /* Estilos gerais */
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #f7f7f7, #ececec);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-        }
-        
-        .container {
-            background: #fff;
-            max-width: 500px;
-            width: 100%;
-            margin-top: 30px;
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        /* Logo do restaurante */
-        .logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: 20px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pesquisa de Satisfação</title>
+  <style>
+    /* Estilos gerais */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f7f7f7, #ececec);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+    
+    .container {
+      background: #fff;
+      max-width: 500px;
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    /* Logo do restaurante */
+    .logo {
+      width: 120px;
+      height: auto;
+      margin-bottom: 20px;
+    }
 
-        /* Título principal */
-        h2 {
-            margin: 10px 0;
-        }
+    /* Título principal */
+    h2 {
+      margin: 10px 0;
+    }
 
-        /* Formulários e elementos de entrada */
-        form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        input, select, button {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-            outline: none;
-        }
-        input:focus, select:focus {
-            border-color: #4CAF50;
-        }
-        button {
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
+    /* Formulários e elementos de entrada */
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    input, select, button {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      outline: none;
+    }
 
-        /* Rating container */
-        .rating-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .rating-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background-color: #ddd;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: bold;
-        }
-        .rating-button:hover {
-            background-color: #bdbdbd;
-        }
-        .rating-button.selected {
-            background-color: #4CAF50;
-            color: white;
-        }
+    button {
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      transition: background-color 0.2s;
+      margin-top: 20px; /* espaçamento extra */
+    }
+    button:hover {
+      background-color: #45a049;
+    }
 
-        /* Sessões ocultas */
-        #pesquisaSatisfacao {
-            display: none;
-        }
-        #paginaObrigado {
-            display: none;
-        }
+    /* Espaçamento extra entre perguntas */
+    .pergunta {
+      margin-bottom: 20px;
+    }
 
-        label {
-            margin-top: 15px;
-            text-align: left;
-        }
+    /* Rating container (para 1-5) */
+    .rating-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .rating-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background-color: #ddd;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+    .rating-button:hover {
+      background-color: #bdbdbd;
+    }
+    .rating-button.selected {
+      background-color: #4CAF50;
+      color: white;
+    }
 
-        /* Botão de voltar */
-        .voltar {
-            background-color: #ccc;
-            color: #333;
-            margin-top: 10px;
-        }
-        .voltar:hover {
-            background-color: #bbb;
-        }
+    /* Sessões ocultas */
+    #pesquisaSatisfacao {
+      display: none;
+    }
+    #paginaObrigado {
+      display: none;
+    }
 
-        /* Responsividade */
-        @media(max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 15px;
-            }
-        }
-    </style>
+    label {
+      margin-top: 10px;
+      text-align: left;
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px; /* espaço entre label e opções */
+    }
+
+    .opcoes {
+      margin-left: 10px; /* recuo para as opções */
+      margin-top: 5px;
+    }
+
+    /* Botão de voltar */
+    .voltar {
+      background-color: #ccc;
+      color: #333;
+      margin-top: 10px;
+    }
+    .voltar:hover {
+      background-color: #bbb;
+    }
+
+    /* Responsividade */
+    @media(max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container" id="cadastroContainer">
-        <!-- Logo do restaurante (substituir logo.png pela imagem real) -->
-        <img src="img/logo.png" alt="Logo do Restaurante" class="logo" />
+  <div class="container" id="cadastroContainer">
+    <!-- Logo do restaurante (substituir logo.png pela imagem real) -->
+    <img src="img/logo.png" alt="Logo do Restaurante" class="logo" />
+    <h2>Cadastro do Cliente</h2>
 
-        <h2>Cadastro do Cliente</h2>
-        <form id="cadastroForm">
-            <input type="text" id="nome" placeholder="Nome" required />
-            <input type="tel" id="telefone" placeholder="Telefone" required />
-            <input type="email" id="email" placeholder="E-mail" required />
-            <button type="button" onclick="prosseguirParaPesquisa()">Avançar</button>
-        </form>
-    </div>
+    <form id="cadastroForm">
+      <input type="text" id="nome" placeholder="Nome" required />
+      <input type="tel" id="telefone" placeholder="Telefone" required />
+      <input type="email" id="email" placeholder="E-mail" required />
+      <button type="button" onclick="prosseguirParaPesquisa()">Avançar</button>
+    </form>
+  </div>
 
-    <div class="container" id="pesquisaSatisfacao">
-        <h2>Pesquisa de Satisfação</h2>
-        <form id="pesquisaForm">
-            <label>O tempo de espera foi satisfatório?</label>
-            <select id="tempo_espera_satisfatorio" required>
-                <option value="">Selecione</option>
-                <option>Sim</option>
-                <option>Não</option>
-            </select>
+  <div class="container" id="pesquisaSatisfacao">
+    <h2>Pesquisa de Satisfação</h2>
+    <form id="pesquisaForm">
 
-            <label>Os atendentes foram prestativos?</label>
-            <select id="atendentes_prestativos" required>
-                <option value="">Selecione</option>
-                <option>Sim</option>
-                <option>Não</option>
-            </select>
+      <!-- Pergunta 1 -->
+      <div class="pergunta">
+        <label>O tempo de espera foi satisfatório?</label>
+        <div class="opcoes">
+          <label>
+            <input type="radio" name="tempo_espera_satisfatorio" value="Sim" /> Sim
+          </label>
+          <label style="margin-left: 20px;">
+            <input type="radio" name="tempo_espera_satisfatorio" value="Não" /> Não
+          </label>
+        </div>
+      </div>
 
-            <label>Como você avalia o sabor dos pratos?</label>
-            <div class="rating-container" id="sabor_pratos">
-                <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Ruim')">1</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Regular')">2</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Bom')">3</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Ótimo')">4</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Excelente')">5</button>
-            </div>
+      <!-- Pergunta 2 -->
+      <div class="pergunta">
+        <label>Os atendentes foram prestativos?</label>
+        <div class="opcoes">
+          <label>
+            <input type="radio" name="atendentes_prestativos" value="Sim" /> Sim
+          </label>
+          <label style="margin-left: 20px;">
+            <input type="radio" name="atendentes_prestativos" value="Não" /> Não
+          </label>
+        </div>
+      </div>
 
-            <label>A variedade do cardápio atendeu suas expectativas?</label>
-            <select id="variedade_cardapio" required>
-                <option value="">Selecione</option>
-                <option>Sim</option>
-                <option>Não</option>
-            </select>
+      <!-- Pergunta 3 (Rating 1-5) -->
+      <div class="pergunta">
+        <label>Como você avalia o sabor dos pratos?</label>
+        <div class="rating-container" id="sabor_pratos">
+          <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Ruim')">1</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Regular')">2</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Bom')">3</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Ótimo')">4</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'sabor_pratos', 'Excelente')">5</button>
+        </div>
+      </div>
 
-            <label>Qual a chance de você recomendar esse restaurante?</label>
-            <div class="rating-container" id="recomendacao">
-                <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Ruim')">1</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Regular')">2</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Bom')">3</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Ótimo')">4</button>
-                <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Excelente')">5</button>
-            </div>
+      <!-- Pergunta 4 -->
+      <div class="pergunta">
+        <label>A variedade do cardápio atendeu suas expectativas?</label>
+        <div class="opcoes">
+          <label>
+            <input type="radio" name="variedade_cardapio" value="Sim" /> Sim
+          </label>
+          <label style="margin-left: 20px;">
+            <input type="radio" name="variedade_cardapio" value="Não" /> Não
+          </label>
+        </div>
+      </div>
 
-            <label>Você voltaria pelo preço e qualidade?</label>
-            <select id="voltaria_pelo_preco" required>
-                <option value="">Selecione</option>
-                <option>Sim</option>
-                <option>Não</option>
-            </select>
+      <!-- Pergunta 5 (Rating 1-5) -->
+      <div class="pergunta">
+        <label>Qual a chance de você recomendar esse restaurante?</label>
+        <div class="rating-container" id="recomendacao">
+          <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Ruim')">1</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Regular')">2</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Bom')">3</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Ótimo')">4</button>
+          <button class="rating-button" onclick="selecionarNota(event, 'recomendacao', 'Excelente')">5</button>
+        </div>
+      </div>
 
-            <!-- Botão agora chama validarEEnviar, mas o texto é "Avançar" -->
-            <button type="button" onclick="validarEEnviar()">Avançar</button>
-            <button type="button" class="voltar" onclick="voltarParaCadastro()">Voltar</button>
-        </form>
-    </div>
+      <!-- Pergunta 6 -->
+      <div class="pergunta">
+        <label>Você voltaria pelo preço e qualidade?</label>
+        <div class="opcoes">
+          <label>
+            <input type="radio" name="voltaria_pelo_preco" value="Sim" /> Sim
+          </label>
+          <label style="margin-left: 20px;">
+            <input type="radio" name="voltaria_pelo_preco" value="Não" /> Não
+          </label>
+        </div>
+      </div>
 
-    <!-- Nova página de "Obrigado" no mesmo HTML -->
-    <div class="container" id="paginaObrigado">
-        <h2>Obrigado!</h2>
-        <p>Sua pesquisa foi enviada com sucesso.</p>
-        <p>Ficamos muito felizes em receber seu feedback!</p>
-    </div>
+      <button type="button" onclick="validarEEnviar()">Enviar</button>
+      <button type="button" class="voltar" onclick="voltarParaCadastro()">Voltar</button>
+    </form>
+  </div>
 
-    <script>
-        let respostas = {};
+  <!-- Página de "Obrigado" -->
+  <div class="container" id="paginaObrigado">
+    <h2>Obrigado!</h2>
+    <p>Sua pesquisa foi enviada com sucesso.</p>
+    <p>Ficamos muito felizes em receber seu feedback!</p>
+  </div>
 
-        function selecionarNota(event, campo, valor) {
-            event.preventDefault();
-            respostas[campo] = valor;
-            document.querySelectorAll(`#${campo} .rating-button`).forEach(btn => btn.classList.remove("selected"));
-            event.target.classList.add("selected");
-        }
+  <script>
+    let respostas = {};
 
-        function prosseguirParaPesquisa() {
-            document.getElementById("cadastroContainer").style.display = "none";
-            document.getElementById("pesquisaSatisfacao").style.display = "flex";
-        }
+    function selecionarNota(event, campo, valor) {
+      event.preventDefault();
+      respostas[campo] = valor;
+      document.querySelectorAll(`#${campo} .rating-button`).forEach(btn => btn.classList.remove("selected"));
+      event.target.classList.add("selected");
+    }
 
-        function voltarParaCadastro() {
-            document.getElementById("cadastroContainer").style.display = "flex";
-            document.getElementById("pesquisaSatisfacao").style.display = "none";
-        }
+    function prosseguirParaPesquisa() {
+      document.getElementById("cadastroContainer").style.display = "none";
+      document.getElementById("pesquisaSatisfacao").style.display = "flex";
+    }
 
-        function validarEEnviar() {
-            const tempo_espera = document.getElementById("tempo_espera_satisfatorio");
-            const atendentes = document.getElementById("atendentes_prestativos");
-            const sabor = respostas["sabor_pratos"];
-            const variedade = document.getElementById("variedade_cardapio");
-            const recomendacao = respostas["recomendacao"];
-            const voltaria = document.getElementById("voltaria_pelo_preco");
+    function voltarParaCadastro() {
+      document.getElementById("cadastroContainer").style.display = "flex";
+      document.getElementById("pesquisaSatisfacao").style.display = "none";
+    }
 
-            if(!tempo_espera.value || !atendentes.value || !variedade.value || !voltaria.value) {
-                alert("Por favor, selecione todas as opções obrigatórias.");
-                return;
-            }
+    function validarEEnviar() {
+      // Perguntas com radio (Sim/Não)
+      const tempo_espera = document.querySelector('input[name="tempo_espera_satisfatorio"]:checked');
+      const atendentes = document.querySelector('input[name="atendentes_prestativos"]:checked');
+      const variedade = document.querySelector('input[name="variedade_cardapio"]:checked');
+      const voltaria = document.querySelector('input[name="voltaria_pelo_preco"]:checked');
 
-            if(!sabor) {
-                alert("Por favor, selecione a nota de sabor dos pratos.");
-                return;
-            }
-            if(!recomendacao) {
-                alert("Por favor, selecione a chance de recomendação.");
-                return;
-            }
+      // Perguntas com rating (1-5)
+      const sabor = respostas["sabor_pratos"];
+      const recomendacao = respostas["recomendacao"];
 
-            enviarFormulario();
-        }
+      if(!tempo_espera || !atendentes || !variedade || !voltaria) {
+        alert("Por favor, selecione todas as opções obrigatórias (Sim/Não).");
+        return;
+      }
+      if(!sabor) {
+        alert("Por favor, selecione a nota de sabor dos pratos.");
+        return;
+      }
+      if(!recomendacao) {
+        alert("Por favor, selecione a chance de recomendação.");
+        return;
+      }
 
-        function enviarFormulario() {
-            const dados = {
-                nome: document.getElementById("nome").value,
-                telefone: document.getElementById("telefone").value,
-                email: document.getElementById("email").value,
-                tempo_espera_satisfatorio: document.getElementById("tempo_espera_satisfatorio").value,
-                atendentes_prestativos: document.getElementById("atendentes_prestativos").value,
-                sabor_pratos: respostas["sabor_pratos"],
-                variedade_cardapio: document.getElementById("variedade_cardapio").value,
-                recomendacao: respostas["recomendacao"],
-                voltaria_pelo_preco: document.getElementById("voltaria_pelo_preco").value
-            };
+      enviarFormulario(tempo_espera.value, atendentes.value, sabor, variedade.value, recomendacao, voltaria.value);
+    }
 
-            fetch("https://pesquisa-satisfacao-efpd.onrender.com/salvar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dados)
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Esconde a pesquisa e mostra a tela de obrigado
-                document.getElementById("pesquisaSatisfacao").style.display = "none";
-                document.getElementById("paginaObrigado").style.display = "flex";
-            })
-            .catch(error => console.error("Erro ao enviar dados:", error));
-        }
-    </script>
+    function enviarFormulario(tempo_espera, atendentes, sabor, variedade, recomendacao, voltaria) {
+      const dados = {
+        nome: document.getElementById("nome").value,
+        telefone: document.getElementById("telefone").value,
+        email: document.getElementById("email").value,
+        tempo_espera_satisfatorio: tempo_espera,
+        atendentes_prestativos: atendentes,
+        sabor_pratos: sabor,
+        variedade_cardapio: variedade,
+        recomendacao: recomendacao,
+        voltaria_pelo_preco: voltaria
+      };
+
+      fetch("https://SEU-BACKEND-RENDER.onrender.com/salvar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Esconde a pesquisa e mostra a tela de obrigado
+        document.getElementById("pesquisaSatisfacao").style.display = "none";
+        document.getElementById("paginaObrigado").style.display = "flex";
+      })
+      .catch(error => console.error("Erro ao enviar dados:", error));
+    }
+  </script>
 </body>
 </html>
