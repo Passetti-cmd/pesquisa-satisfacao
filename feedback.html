@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Feedbacks</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 20px;
+          text-align: center;
+      }
+      h2 {
+          color: #333;
+      }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+          background: #fff;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      th, td {
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+          text-align: center;
+      }
+      th {
+          background: #4CAF50;
+          color: white;
+      }
+      tr:hover {
+          background-color: #f1f1f1;
+      }
+      .exportar {
+          margin-top: 20px;
+          padding: 10px 20px;
+          background: #007BFF;
+          color: white;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          border-radius: 5px;
+      }
+      .exportar:hover {
+          background: #0056b3;
+      }
+  </style>
+</head>
+<body>
+
+  <h2>Feedbacks Recebidos</h2>
+  <button class="exportar" onclick="exportarCSV()">Exportar para CSV</button>
+  
+  <table id="tabelaFeedbacks">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>Email</th>
+              <th>Tempo de Espera</th>
+              <th>Atendimento</th>
+              <th>Sabor</th>
+              <th>Variedade</th>
+              <th>Recomendação</th>
+              <th>Voltaria?</th>
+          </tr>
+      </thead>
+      <tbody></tbody>
+  </table>
+
+  <script>
+    // Função para carregar feedbacks do backend e preencher a tabela
+    async function carregarFeedbacks() {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/feedbacks");
+        const feedbacks = await response.json();
+        const tabela = document.querySelector("#tabelaFeedbacks tbody");
+
+        tabela.innerHTML = "";  // Limpa a tabela
+
+        feedbacks.forEach(feedback => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${feedback.id}</td>
+            <td>${feedback.nome}</td>
+            <td>${feedback.telefone}</td>
+            <td>${feedback.email}</td>
+            <td>${feedback.tempo_espera_satisfatorio}</td>
+            <td>${feedback.atendentes_prestativos}</td>
+            <td>${feedback.sabor_pratos}</td>
+            <td>${feedback.variedade_cardapio}</td>
+            <td>${feedback.recomendacao}</td>
+            <td>${feedback.voltaria_pelo_preco}</td>
+          `;
+          tabela.appendChild(row);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar feedbacks:", error);
+      }
+    }
+
+    // Função para exportar o conteúdo da tabela para CSV
+    function exportarCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,\uFEFF";  // Adiciona BOM para suportar acentuação
+      csvContent += "ID,Nome,Telefone,Email,Tempo de Espera,Atendimento,Sabor,Variedade,Recomendação,Voltaria?\n";
+
+      document.querySelectorAll("#tabelaFeedbacks tbody tr").forEach(row => {
+        let rowData = [];
+        row.querySelectorAll("td").forEach(cell => {
+          let cellText = cell.innerText.replace(/,/g, " "); // Evita problemas com vírgulas
+          rowData.push(`"${cellText}"`); // Envolve em aspas
+        });
+        csvContent += rowData.join(",") + "\r\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "feedbacks.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Carrega a tabela assim que a página é aberta
+    window.onload = carregarFeedbacks;
+  </script>
+ 
+</body>
+ </html>
