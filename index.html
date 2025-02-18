@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pesquisa de Satisfação</title>
   <style>
     /* Estilos gerais */
@@ -20,11 +20,11 @@
     
     .container {
       background: #fff;
-      max-width: 500px;
+      max-width: 600px; /* Aumentei um pouco para melhor visual */
       width: 100%;
       margin-top: 30px;
       margin-bottom: 30px;
-      padding: 20px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       display: flex;
@@ -32,14 +32,12 @@
       align-items: center;
     }
     
-    /* Logo do restaurante */
     .logo {
       width: 120px;
       height: auto;
       margin-bottom: 20px;
     }
 
-    /* Título principal */
     h2 {
       margin: 10px 0;
     }
@@ -67,18 +65,37 @@
       border: none;
       font-weight: bold;
       transition: background-color 0.2s;
-      margin-top: 20px; /* espaçamento extra */
+      margin-top: 20px; /* Espaço extra */
     }
     button:hover {
       background-color: #45a049;
     }
 
-    /* Espaçamento extra entre perguntas */
+    /* Pergunta */
     .pergunta {
-      margin-bottom: 20px;
+      margin-bottom: 20px; /* espaço entre as perguntas */
+    }
+    .pergunta label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: block;
     }
 
-    /* Rating container (para 1-5) */
+    /* Grupo de radio em linha */
+    .radio-group {
+      display: flex;
+      align-items: center;
+      gap: 30px; /* espaço entre opções */
+      margin-top: 5px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 5px; /* espaço entre o radio e o texto */
+    }
+
+    /* Rating container (1 a 5) */
     .rating-container {
       display: flex;
       justify-content: center;
@@ -111,24 +128,10 @@
       display: none;
     }
 
-    label {
-      margin-top: 10px;
-      text-align: left;
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px; /* espaço entre label e opções */
-    }
-
-    .opcoes {
-      margin-left: 10px; /* recuo para as opções */
-      margin-top: 5px;
-    }
-
     /* Botão de voltar */
     .voltar {
       background-color: #ccc;
       color: #333;
-      margin-top: 10px;
     }
     .voltar:hover {
       background-color: #bbb;
@@ -138,7 +141,10 @@
     @media(max-width: 600px) {
       .container {
         margin: 20px;
-        padding: 15px;
+        padding: 20px;
+      }
+      .radio-group {
+        flex-wrap: wrap; /* Se ficar apertado, quebra linha */
       }
     }
   </style>
@@ -148,7 +154,6 @@
     <!-- Logo do restaurante (substituir logo.png pela imagem real) -->
     <img src="img/logo.png" alt="Logo do Restaurante" class="logo" />
     <h2>Cadastro do Cliente</h2>
-
     <form id="cadastroForm">
       <input type="text" id="nome" placeholder="Nome" required />
       <input type="tel" id="telefone" placeholder="Telefone" required />
@@ -160,16 +165,17 @@
   <div class="container" id="pesquisaSatisfacao">
     <h2>Pesquisa de Satisfação</h2>
     <form id="pesquisaForm">
-
       <!-- Pergunta 1 -->
       <div class="pergunta">
         <label>O tempo de espera foi satisfatório?</label>
-        <div class="opcoes">
-          <label>
-            <input type="radio" name="tempo_espera_satisfatorio" value="Sim" /> Sim
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="tempo_espera_satisfatorio" value="Sim" />
+            <span>Sim</span>
           </label>
-          <label style="margin-left: 20px;">
-            <input type="radio" name="tempo_espera_satisfatorio" value="Não" /> Não
+          <label class="radio-option">
+            <input type="radio" name="tempo_espera_satisfatorio" value="Não" />
+            <span>Não</span>
           </label>
         </div>
       </div>
@@ -177,17 +183,19 @@
       <!-- Pergunta 2 -->
       <div class="pergunta">
         <label>Os atendentes foram prestativos?</label>
-        <div class="opcoes">
-          <label>
-            <input type="radio" name="atendentes_prestativos" value="Sim" /> Sim
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="atendentes_prestativos" value="Sim" />
+            <span>Sim</span>
           </label>
-          <label style="margin-left: 20px;">
-            <input type="radio" name="atendentes_prestativos" value="Não" /> Não
+          <label class="radio-option">
+            <input type="radio" name="atendentes_prestativos" value="Não" />
+            <span>Não</span>
           </label>
         </div>
       </div>
 
-      <!-- Pergunta 3 (Rating 1-5) -->
+      <!-- Pergunta 3 (rating 1-5) -->
       <div class="pergunta">
         <label>Como você avalia o sabor dos pratos?</label>
         <div class="rating-container" id="sabor_pratos">
@@ -202,17 +210,19 @@
       <!-- Pergunta 4 -->
       <div class="pergunta">
         <label>A variedade do cardápio atendeu suas expectativas?</label>
-        <div class="opcoes">
-          <label>
-            <input type="radio" name="variedade_cardapio" value="Sim" /> Sim
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="variedade_cardapio" value="Sim" />
+            <span>Sim</span>
           </label>
-          <label style="margin-left: 20px;">
-            <input type="radio" name="variedade_cardapio" value="Não" /> Não
+          <label class="radio-option">
+            <input type="radio" name="variedade_cardapio" value="Não" />
+            <span>Não</span>
           </label>
         </div>
       </div>
 
-      <!-- Pergunta 5 (Rating 1-5) -->
+      <!-- Pergunta 5 (rating 1-5) -->
       <div class="pergunta">
         <label>Qual a chance de você recomendar esse restaurante?</label>
         <div class="rating-container" id="recomendacao">
@@ -227,12 +237,14 @@
       <!-- Pergunta 6 -->
       <div class="pergunta">
         <label>Você voltaria pelo preço e qualidade?</label>
-        <div class="opcoes">
-          <label>
-            <input type="radio" name="voltaria_pelo_preco" value="Sim" /> Sim
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="voltaria_pelo_preco" value="Sim" />
+            <span>Sim</span>
           </label>
-          <label style="margin-left: 20px;">
-            <input type="radio" name="voltaria_pelo_preco" value="Não" /> Não
+          <label class="radio-option">
+            <input type="radio" name="voltaria_pelo_preco" value="Não" />
+            <span>Não</span>
           </label>
         </div>
       </div>
@@ -242,7 +254,6 @@
     </form>
   </div>
 
-  <!-- Página de "Obrigado" -->
   <div class="container" id="paginaObrigado">
     <h2>Obrigado!</h2>
     <p>Sua pesquisa foi enviada com sucesso.</p>
@@ -270,26 +281,24 @@
     }
 
     function validarEEnviar() {
-      // Perguntas com radio (Sim/Não)
       const tempo_espera = document.querySelector('input[name="tempo_espera_satisfatorio"]:checked');
       const atendentes = document.querySelector('input[name="atendentes_prestativos"]:checked');
       const variedade = document.querySelector('input[name="variedade_cardapio"]:checked');
       const voltaria = document.querySelector('input[name="voltaria_pelo_preco"]:checked');
 
-      // Perguntas com rating (1-5)
       const sabor = respostas["sabor_pratos"];
       const recomendacao = respostas["recomendacao"];
 
       if(!tempo_espera || !atendentes || !variedade || !voltaria) {
-        alert("Por favor, selecione todas as opções obrigatórias (Sim/Não).");
+        alert("Por favor, selecione as opções (Sim/Não) obrigatórias.");
         return;
       }
       if(!sabor) {
-        alert("Por favor, selecione a nota de sabor dos pratos.");
+        alert("Por favor, selecione a nota de sabor dos pratos (1-5).");
         return;
       }
       if(!recomendacao) {
-        alert("Por favor, selecione a chance de recomendação.");
+        alert("Por favor, selecione a nota de recomendação (1-5).");
         return;
       }
 
@@ -309,6 +318,7 @@
         voltaria_pelo_preco: voltaria
       };
 
+      // Troque pela URL do seu backend no Render:
       fetch("https://SEU-BACKEND-RENDER.onrender.com/salvar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -316,7 +326,6 @@
       })
       .then(response => response.json())
       .then(data => {
-        // Esconde a pesquisa e mostra a tela de obrigado
         document.getElementById("pesquisaSatisfacao").style.display = "none";
         document.getElementById("paginaObrigado").style.display = "flex";
       })
