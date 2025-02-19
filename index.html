@@ -275,31 +275,32 @@
       enviarFormulario();
     }
 
-    function enviarFormulario() {
-      const dados = {
-        nome: document.getElementById("nome").value,
-        telefone: document.getElementById("telefone").value,
-        email: document.getElementById("email").value,
-        tempo_espera_satisfatorio: respostas["tempo_espera_satisfatorio"],
-        atendentes_prestativos: respostas["atendentes_prestativos"],
-        sabor_pratos: respostas["sabor_pratos"],
-        variedade_cardapio: respostas["variedade_cardapio"],
-        recomendacao: respostas["recomendacao"],
-        voltaria_pelo_preco: respostas["voltaria_pelo_preco"]
-      };
+function enviarFormulario() {
+  const dados = {
+    nome: document.getElementById("nome").value,
+    telefone: document.getElementById("telefone").value,
+    email: document.getElementById("email").value,
+    tempo_espera_satisfatorio: respostas["tempo_espera_satisfatorio"],
+    atendentes_prestativos: respostas["atendentes_prestativos"],
+    sabor_pratos: respostas["sabor_pratos"],
+    variedade_cardapio: respostas["variedade_cardapio"],
+    recomendacao: respostas["recomendacao"],
+    voltaria_pelo_preco: respostas["voltaria_pelo_preco"]
+  };
 
-      fetch("http://localhost:5000/salvar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados)
-      })
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("pesquisaSatisfacao").style.display = "none";
-        document.getElementById("paginaObrigado").style.display = "flex";
-      })
-      .catch(error => console.error("Erro ao enviar dados:", error));
-    }
+  fetch("https://pesquisa-satisfacao-efpd.onrender.com/salvar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados)
+  })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("pesquisaSatisfacao").style.display = "none";
+    document.getElementById("paginaObrigado").style.display = "flex";
+  })
+  .catch(error => console.error("Erro ao enviar dados:", error));
+}
+
   </script>
 </body>
 </html>
